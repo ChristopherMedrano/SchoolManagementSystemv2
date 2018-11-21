@@ -47,14 +47,25 @@ public class TeachingDAO implements TeachingDAOI {
 	@Override
 	public int registerTeacherToCourse(int courseID, int instructorID) {
 		String query = "INSERT INTO teaching (COURSE_ID, INSTRUCTOR_ID) VALUES(?, ?)";
-		int rs = 0;
+		String idQuery = "SELECT \"ISEQ$$_87653\".CURRVAL FROM TEACHING";
+		int recordID = 0, result = 0;
+		
 
 		try {
 			conn = oc.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, courseID);
 			ps.setInt(2, instructorID);
-			rs = ps.executeUpdate();
+			result = ps.executeUpdate();
+			
+			if(result == 1) {
+				st = conn.createStatement();
+				rs = st.executeQuery(idQuery);
+				if (rs.next()) {
+					recordID = rs.getInt(1);
+				}
+			}
+			
 
 		} catch (SQLException e) {
 		} catch (IOException e) {
@@ -63,22 +74,21 @@ public class TeachingDAO implements TeachingDAOI {
 			this.dispose();
 		}
 
-		return rs;
+		return recordID;
 	}
 
 	@Override
 	public List<Teaching> getInstructorsCourses() {
 		List<Teaching> instructorCourses = new ArrayList<Teaching>();
 		Teaching teaching = null;
-		String query = "SELECT DISTINCT TEACHING.INSTRUCTOR_ID, INSTRUCTOR.FULL_NAME FROM TEACHING LEFT JOIN INSTRUCTOR ON TEACHING.INSTRUCTOR_ID = INSTRUCTOR.INSTRUCTOR_ID ORDER BY TEACHING.INSTRUCTOR_ID ASC";
+		String query = "SELECT course.COURSE_NAME, course.MINIMUN_GPA, INSTRUCTOR.FULL_NAME, INSTRUCTOR.EMAIL FROM TEACHING LEFT JOIN INSTRUCTOR ON TEACHING.INSTRUCTOR_ID = INSTRUCTOR.INSTRUCTOR_ID LEFT JOIN course ON teaching.COURSE_ID = course.COURSE_ID";
 		
 		try {
 			conn = oc.getConnection();
 			st = conn.createStatement();
 			rs = st.executeQuery(query);
 			while(rs.next()) {
-				teaching = new Teaching();
-				teaching.setName(rs.getString(2));
+				teaching = new Teaching(rs.getString(1), rs.getDouble(2), rs.getString(3), rs.getString(4));
 				instructorCourses.add(teaching);
 			}
 

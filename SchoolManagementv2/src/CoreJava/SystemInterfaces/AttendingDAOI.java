@@ -9,6 +9,7 @@ import CoreJava.Models.Course;
 import CoreJava.Models.Student;
 
 /**
+ * 
  * Interface for the AttendingDAO
  * 
  * Contains OracleConnection object to interact with database.  
@@ -16,7 +17,6 @@ import CoreJava.Models.Student;
  * Contains methods: 
  * 	- registerStudentToCourse
  * 	- getStudentCourse
- * 
  * 
  * @author Chris Medrano
  *

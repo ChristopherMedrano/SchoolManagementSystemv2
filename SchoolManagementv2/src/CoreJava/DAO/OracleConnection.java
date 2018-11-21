@@ -7,9 +7,26 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-
-
+/**
+ * 
+ * Used to  created a connection to the database and handle exceptions. 
+ * Uses db.properties located in the resources folder
+ * 
+ * @author Chris Medrano
+ *
+ */
 public class OracleConnection{
+	
+	/**
+	 * 
+	 * Attempts to connect to the database.
+	 * 
+	 * @return connection 	whether or not we were able to connect to database
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 * @throws SQLException
+	 * 
+	 */
 	public Connection getConnection() throws ClassNotFoundException,
 	IOException, SQLException {
 	final Properties prop = new Properties();

@@ -2,9 +2,11 @@ package CoreJava.MainEntryPoint;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import CoreJava.CustomExceptions.InvalidInputException;
 import CoreJava.CustomExceptions.StudentRegistrationException;
 import CoreJava.DAO.AttendingDAO;
 import CoreJava.DAO.CourseDAO;
@@ -92,7 +94,7 @@ public class MainEntryClass {
 //    =====================================================     Seperator      =======================================================
 //    ================================================================================================================================
     public void allIntructors() throws ClassNotFoundException, IOException {
-        InstructorDAO insDAO = new InstructorDAO();
+    	InstructorDAO insDAO = new InstructorDAO();
         
         List<Instructor> allIns = insDAO.getAllInstructors();
         System.out.printf("\nInstructors:\n======================================================================\n");
@@ -122,7 +124,7 @@ public class MainEntryClass {
     public void allCoursesWithInstructor() {
         TeachingDAO teaDAO = new TeachingDAO();
         List<Teaching> teaList = teaDAO.getInstructorsCourses(); //FIXED TYPO in method name
-        System.out.printf("COURSE NAME \t COURSE MINIMUN GPA \t INTRUCTOR NAME \t INSTRUCTOR EMAIL\n\n");
+        System.out.printf("COURSE NAME \t COURSE MINIMUN GPA \t INSTRUCTOR NAME \t INSTRUCTOR EMAIL\n\n");
         for(Teaching teaAGN : teaList) {
             System.out.printf("%-16s %-23s %-23s %s\n", teaAGN.getCourseName(), teaAGN.getMinGpa(), 
                     teaAGN.getName(), teaAGN.getEmail());
@@ -150,7 +152,7 @@ public class MainEntryClass {
         }
     }
     
-    public static void main(String[] args) throws ClassNotFoundException, IOException, StudentRegistrationException {
+    public static void main(String[] args) throws ClassNotFoundException, IOException, StudentRegistrationException, InputMismatchException {
         boolean quit = false;
         Scanner reader = new Scanner(System.in);
         MainEntryClass mainObj = new MainEntryClass();
@@ -170,7 +172,13 @@ public class MainEntryClass {
         String password = "";
         while(!quit) {
             System.out.println("Are you a(n)\n1. Instructor \n2. Student \n3. quit \nPlease, enter 1, 2 or 3 \n");
-            InsOrStu = reader.nextInt();
+            
+            try {
+            	InsOrStu = reader.nextInt();
+            }catch (InputMismatchException e){
+            	throw new InvalidInputException("Enter 1, 2, or 3");
+            }
+            
             if(InsOrStu == 1) {
                 boolean logout = false;
                 while(!logout) {
@@ -182,7 +190,6 @@ public class MainEntryClass {
                     ins = insDAO.getInstructorByGmail(email);
                     
                     insROLE = insDAO.validateUser(ins, password);
-                    
                     
                     if("Admin".equals(insROLE)) {
                         teaDAO = new TeachingDAO();
@@ -198,11 +205,22 @@ public class MainEntryClass {
                                 int instructor_id = -1;
                                 int course_id = -1;
                                 mainObj.allIntructors();
-                                System.out.println("\nWhat Instructor?\n");
-                                instructor_id = reader.nextInt();
+                                System.out.println("\nWhat Instructor?\n");                     
+                                try {
+                                	instructor_id = reader.nextInt();
+                                }catch (InputMismatchException e){
+                                	throw new InvalidInputException("Enter instructor id");
+                                }
+                                
                                 mainObj.allCourse();
                                 System.out.println("\nWhich Course?\n");
-                                course_id = reader.nextInt();
+                                
+                                try {
+                                	course_id = reader.nextInt();
+                                }catch (InputMismatchException e){
+                                	throw new InvalidInputException("Enter course id");
+                                }
+                                
                                 int assignId =  teaDAO.registerTeacherToCourse(course_id, instructor_id);
                                 if(assignId != -1) {
                                     System.out.println("\n -->Instructor Assigned<--\nNew Record Id: "+ assignId+"\n");
@@ -261,9 +279,13 @@ public class MainEntryClass {
                                 List<Course> coList = coDAO.getAllCourses();
                                 mainObj.allCourses(coList);
                                 System.out.println("\nWhich Course?\n");
-                                int course_idForStudent = reader.nextInt();
-                                attDAO.registerStudentToCourse(stu, coList.get(course_idForStudent - 1));
-                                classesTo = "";
+                                try {
+                                	int course_idForStudent = reader.nextInt();
+                                	attDAO.registerStudentToCourse(stu, coList.get(course_idForStudent - 1));
+                                    classesTo = "";
+                                }catch (InputMismatchException e){
+                                	throw new InvalidInputException("Enter course id");
+                                }
                             }
                         }
                         logout = true;

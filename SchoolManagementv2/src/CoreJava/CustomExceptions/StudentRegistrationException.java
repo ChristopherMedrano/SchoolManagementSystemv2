@@ -17,6 +17,8 @@ public class StudentRegistrationException extends Exception {
 	 * Accepts a string parameter 
 	 * and passes it to its parent using the super keyword
 	 * 
+	 * Terminates program after exception is thrown. 
+	 * 
 	 * @param message
 	 */
 	
