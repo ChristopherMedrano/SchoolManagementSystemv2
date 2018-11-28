@@ -158,4 +158,26 @@ public class Student {
 	public int getRole() {
 		return this.student_role;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Student) {
+			Student other = (Student) obj;
+			boolean sameId = (this.student_id == other.getID());
+			boolean sameEmail = (this.email == other.getEmail());
+			boolean sameName = (this.full_name == other.getName());
+			boolean sameGpa = (this.gpa == other.getGpa());
+			boolean samePass = (this.pass == other.getPass());
+			boolean sameRole = (this.student_role == other.getRole());
+			
+			if(sameId && sameEmail && sameName && sameGpa && samePass && sameRole) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} else {
+			return false;
+		}
+	}
 }

@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package CoreJava.JUnit;
 
 import static org.junit.Assert.*;
@@ -10,37 +13,39 @@ import org.junit.Test;
 
 import CoreJava.DAO.AttendingDAO;
 import CoreJava.DAO.SampleDB;
-import CoreJava.Models.Course;
+import CoreJava.DAO.StudentDAO;
 
-public class Test_DAO_Attending {
-	static AttendingDAO attendingDAO;
+/**
+ * @author Students
+ *
+ */
+public class Test_DAO_Student {
+	static StudentDAO studentDAO;
 	static SampleDB testDB;
-
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		attendingDAO = new AttendingDAO();
 		testDB = new SampleDB();
 		testDB.getQueryList().populateDB();
+		studentDAO = new StudentDAO();
 	}
 
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		testDB.getDropStatements().dropDB();
 	}
-
+	
+	/**
+	 * Test getStudentByGmail(String email);
+	 */
 	@Test
-	public final void testRegisterStudentToCourse() {
+	public final void test() {
 		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public final void testGetStudentCourse() {
-//		Course expectedCourse = new Course(2, "Earth Science", 2.4);
-//		Course actualCourse = attendingDAO.getStudentCourse(3);
-//		
-//		assertEquals(expectedCourse,actualCourse);
-		fail("Not yet implemented"); // TODO
-		
 	}
 
 }
