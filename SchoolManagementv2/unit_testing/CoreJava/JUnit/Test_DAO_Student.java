@@ -3,27 +3,34 @@
  */
 package CoreJava.JUnit;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import CoreJava.DAO.AttendingDAO;
 import CoreJava.DAO.SampleDB;
 import CoreJava.DAO.StudentDAO;
+import CoreJava.Models.Student;
 
 /**
- * @author Students
+ * 
+ * Tests the methods in the StudentDAO using JUnit 4
+ * @author Chris Medrano
  *
  */
 public class Test_DAO_Student {
 	static StudentDAO studentDAO;
 	static SampleDB testDB;
+	
 	/**
+	 * 
+	 * Sets up test database.
+	 * Queries pulled from /src/CoreJava/Resources/populateData.sql
+	 * Creates new StudentDAO object. 
+	 * 
 	 * @throws java.lang.Exception
+	 * 
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -33,7 +40,11 @@ public class Test_DAO_Student {
 	}
 
 	/**
+	 * 
+	 * Drops all tables from the sample database.
+	 * 
 	 * @throws java.lang.Exception
+	 * 
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
@@ -41,11 +52,36 @@ public class Test_DAO_Student {
 	}
 	
 	/**
-	 * Test getStudentByGmail(String email);
+	 * Test getStudentByGmail(String email)
+	 */	
+	@Test
+	public final void testGetStudentByGmail() {
+		// expected result 
+		Student expected = new Student(000, "Bairon Vasquez","b@gmail.com", 3.4, "111", -1);
+		
+		//	actual result 
+		Student actual = studentDAO.getStudentByGmail("b@gmail.com");
+		
+		// result
+		Assert.assertEquals(expected, actual);
+
+	}
+	
+	/**
+	 * Test validateUser(String passToValidate, String comparablePas)
 	 */
 	@Test
-	public final void test() {
-		fail("Not yet implemented"); // TODO
+	public final void testValidateUser() {
+		String comparablePas, passToValidate;
+		
+		// expected
+		comparablePas = "111";
+		
+		// expected
+		Student student = new Student(000, "Bairon Vasquez","b@gmail.com", 3.4, "111", -1);
+		passToValidate = student.getPass();
+		
+		Assert.assertTrue(studentDAO.validateUser(passToValidate, comparablePas));
 	}
 
 }

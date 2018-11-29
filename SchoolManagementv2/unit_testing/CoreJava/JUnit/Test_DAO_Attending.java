@@ -1,16 +1,20 @@
 package CoreJava.JUnit;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import CoreJava.CustomExceptions.StudentRegistrationException;
 import CoreJava.DAO.AttendingDAO;
 import CoreJava.DAO.SampleDB;
+import CoreJava.Models.Attending;
 import CoreJava.Models.Course;
+import CoreJava.Models.Student;
+
 
 public class Test_DAO_Attending {
 	static AttendingDAO attendingDAO;
@@ -27,20 +31,32 @@ public class Test_DAO_Attending {
 	public static void tearDownAfterClass() throws Exception {
 		testDB.getDropStatements().dropDB();
 	}
-
+	
 	@Test
-	public final void testRegisterStudentToCourse() {
-		fail("Not yet implemented"); // TODO
+	public final void testRegisterStudentToCourse() throws StudentRegistrationException {
+		Student student = new Student(1, "Bairon Vasquez","b@gmail.com", 3.4, "111", -1);
+		Course course = new Course (1, "Science", 3.2);
+		
+		int attendingID = attendingDAO.registerStudentToCourse(student, course);
+		
+		Assert.assertTrue(attendingID != 0);
+	}
+	
+	@Test(expected = StudentRegistrationException.class)
+	public final void testStudentRegistrationException() throws StudentRegistrationException {
+		Student student = new Student(1, "Bairon Vasquez","b@gmail.com", 1.0, "111", -1);
+		Course course = new Course (1, "Science", 3.2);
+		
+		attendingDAO.registerStudentToCourse(student, course);
 	}
 
 	@Test
 	public final void testGetStudentCourse() {
-//		Course expectedCourse = new Course(2, "Earth Science", 2.4);
-//		Course actualCourse = attendingDAO.getStudentCourse(3);
-//		
-//		assertEquals(expectedCourse,actualCourse);
-		fail("Not yet implemented"); // TODO
+		List<Attending> attendingCourses = null;
 		
+		attendingCourses = attendingDAO.getStudentCourse(1);
+		
+		Assert.assertNotNull(attendingCourses);
 	}
 
 }
