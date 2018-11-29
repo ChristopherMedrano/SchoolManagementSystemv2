@@ -3,54 +3,40 @@
  */
 package CoreJava.JUnit;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import CoreJava.DAO.AttendingDAO;
 import CoreJava.DAO.CourseDAO;
-import CoreJava.DAO.SampleDB;
 import CoreJava.Models.Course;
-import CoreJava.Models.Instructor;
 
 
 /**
+ * 
+ * Tests the methods in the CourseDAO using JUnit 4
  * @author Chris Medrano
  *
  */
 public class Test_DAO_Course {
-	static SampleDB testDB;
+	//static SampleDB testDB;
 	static CourseDAO courseDAO;
-	
-	/**
-	 * @throws java.lang.Exception
-	 */
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		courseDAO = new CourseDAO();
-		testDB = new SampleDB().getQueryList().populateDB();
+		//testDB = new SampleDB().getQueryList().populateDB();
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		testDB.getDropStatements().dropDB();
+		//testDB.getDropStatements().dropDB();
 	}
 
-	
-
 	/**
-	 * Test method for {@link CoreJava.DAO.CourseDAO#getAllCourses()}.
+	 * Test method for getAllCourses()
 	 */
 	@Test
 	public final void testGetAllCourses() {
@@ -62,7 +48,7 @@ public class Test_DAO_Course {
 	}
 
 	/**
-	 * Test method for {@link CoreJava.DAO.CourseDAO#getCourseByInstructor(int)}.
+	 * Test method for getCourseByInstructor(int)
 	 */
 	@Test
 	public final void testGetCourseByInstructor() {

@@ -1,5 +1,6 @@
 package CoreJava.SystemInterfaces;
 
+import CoreJava.DAO.OracleConnection;
 import CoreJava.Models.Student;
 
 /**
@@ -15,5 +16,7 @@ import CoreJava.Models.Student;
  *
  */
 public interface StudentDAOI {
+	OracleConnection oc = new OracleConnection();
+	
 	Student getStudentByGmail(String email);
 }

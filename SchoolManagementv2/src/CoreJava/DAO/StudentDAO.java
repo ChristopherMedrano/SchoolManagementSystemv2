@@ -1,14 +1,7 @@
 package CoreJava.DAO;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import CoreJava.Models.Student;
 import CoreJava.SystemInterfaces.StudentDAOI;
 
@@ -21,31 +14,7 @@ import CoreJava.SystemInterfaces.StudentDAOI;
  * @author Chris Medrano
  *
  */
-public class StudentDAO implements StudentDAOI {
-	OracleConnection oc = new OracleConnection();
-	
-	protected Connection conn = null;
-	protected Statement st = null;
-	protected PreparedStatement ps = null;
-	protected ResultSet rs = null;
-	
-	public void dispose() {
-		try {
-			if(!rs.equals(null)) {
-				if(!rs.isClosed()) rs.close();
-			}
-			if(!ps.equals(null)) {
-				if(!ps.isClosed()) ps.close();
-			}
-			if(!conn.equals(null)) {
-				if(!conn.isClosed()) conn.close();
-			}
-		}catch(SQLException e) {
-			System.out.println(e);
-		}catch(NullPointerException e) {
-			
-		}
-	}
+public class StudentDAO extends AbstractDAO implements StudentDAOI {
 	
 	/**
 	 * 
@@ -75,8 +44,7 @@ public class StudentDAO implements StudentDAOI {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			this.dispose();
 		}
 		

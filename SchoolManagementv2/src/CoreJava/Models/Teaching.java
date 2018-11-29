@@ -49,4 +49,25 @@ public class Teaching {
 	public String getEmail() {
 		return this.email;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Teaching) {
+			Teaching other = (Teaching) obj;
+			boolean course_name = (this.course_name == other.getCourseName());
+			boolean minimum_gpa = (this.minimum_gpa == other.getMinGpa());
+			boolean full_name = (this.full_name == other.getName());
+			boolean email = (this.email == other.getEmail());
+			
+			if(course_name && minimum_gpa && full_name && email) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} else {
+			return false;
+		}
+}
+	
 }

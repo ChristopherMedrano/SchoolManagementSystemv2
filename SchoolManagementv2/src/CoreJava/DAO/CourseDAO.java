@@ -1,11 +1,7 @@
 package CoreJava.DAO;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,57 +10,19 @@ import CoreJava.SystemInterfaces.CourseDAOI;
 
 /**
  * This Data Access Object maps queries for the Course table to the database.
- * The Course table represents the courses. 
+ * The Course table represents the courses.
  * 
  * Implements the CourseDAOI interface
  * 
  * @author Chris Medrano
  *
  */
-public class CourseDAO implements CourseDAOI {
-	
-	/*
-	 * These objects are used to connect and query the database 
-	 */ 
-	protected Connection conn = null;
-	protected Statement st = null;
-	protected PreparedStatement ps = null;
-	protected ResultSet rs = null;
+public class CourseDAO extends AbstractDAO implements CourseDAOI {
 
 	/**
 	 * 
-	 * This method looks for open connections to the database. 
-	 * Any open connections are closed.
-	 * 
-	 * @param none
-	 *  
-	 */
-	public void dispose() {
-		try {
-			if (!rs.equals(null)) {
-				if (!rs.isClosed())
-					rs.close();
-			}
-			if (!ps.equals(null)) {
-				if (!ps.isClosed())
-					ps.close();
-			}
-			if (!conn.equals(null)) {
-				if (!conn.isClosed())
-					conn.close();
-			}
-		} catch (SQLException e) {
-			System.out.println(e);
-		} catch (NullPointerException e) {
-			//ignore
-		}
-	}
-
-	/**
-	 * 
-	 * Overrides CourseDAOI interface method
-	 * This method queries the Course table in the database
-	 * Selects all rows from Course table
+	 * Overrides CourseDAOI interface method This method queries the Course table in
+	 * the database Selects all rows from Course table
 	 * 
 	 * @return List of all courses
 	 * 
@@ -99,11 +57,11 @@ public class CourseDAO implements CourseDAOI {
 
 	/**
 	 * 
-	 * Overrides CourseDAOI interface method
-	 * This method queries the database for all courses an Instructor is assigned to
+	 * Overrides CourseDAOI interface method This method queries the database for
+	 * all courses an Instructor is assigned to
 	 * 
-	 * @param	int		the ID of instructor used to query database
-	 * @return List 	Courses the Instructor is assigned to 
+	 * @param int the ID of instructor used to query database
+	 * @return List Courses the Instructor is assigned to
 	 * 
 	 */
 	@Override

@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import CoreJava.DAO.AttendingDAO;
-import CoreJava.DAO.SampleDB;
 import CoreJava.DAO.StudentDAO;
 import CoreJava.Models.Student;
 
@@ -21,34 +19,18 @@ import CoreJava.Models.Student;
  */
 public class Test_DAO_Student {
 	static StudentDAO studentDAO;
-	static SampleDB testDB;
-	
-	/**
-	 * 
-	 * Sets up test database.
-	 * Queries pulled from /src/CoreJava/Resources/populateData.sql
-	 * Creates new StudentDAO object. 
-	 * 
-	 * @throws java.lang.Exception
-	 * 
-	 */
+	//static SampleDB testDB;
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		testDB = new SampleDB();
-		testDB.getQueryList().populateDB();
+		//testDB = new SampleDB();
+		//testDB.getQueryList().populateDB();
 		studentDAO = new StudentDAO();
 	}
 
-	/**
-	 * 
-	 * Drops all tables from the sample database.
-	 * 
-	 * @throws java.lang.Exception
-	 * 
-	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		testDB.getDropStatements().dropDB();
+		//testDB.getDropStatements().dropDB();
 	}
 	
 	/**
@@ -62,8 +44,8 @@ public class Test_DAO_Student {
 		//	actual result 
 		Student actual = studentDAO.getStudentByGmail("b@gmail.com");
 		
-		// result
-		Assert.assertEquals(expected, actual);
+		//assertion
+		Assert.assertEquals(expected.getEmail(), actual.getEmail());
 
 	}
 	
@@ -81,6 +63,7 @@ public class Test_DAO_Student {
 		Student student = new Student(000, "Bairon Vasquez","b@gmail.com", 3.4, "111", -1);
 		passToValidate = student.getPass();
 		
+		//assertion
 		Assert.assertTrue(studentDAO.validateUser(passToValidate, comparablePas));
 	}
 
