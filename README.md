@@ -1,3 +1,3 @@
-# SchoolManagementSystemv2
+# Sample school management system
 
 Project for class
